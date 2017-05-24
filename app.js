@@ -35,23 +35,28 @@ var getExtensions = (extension, response) => {
 module.exports = {
     handleRequest: (request, response) => {
         try {
-            var uri = url.parse(request.url).pathname;
-            var filename = path.join(process.cwd(), uri);
-            var tmp  = uri.lastIndexOf(".");
-            var extension  = uri.substring((tmp + 1));
+            if(request.method === "GET") {
+                var uri = url.parse(request.url).pathname;
+                var filename = path.join(process.cwd(), uri);
 
-            if(uri === "/") {
-                filename = filename + 'index.html';
+                var tmp  = uri.lastIndexOf(".");
+                var extension  = uri.substring((tmp + 1));
+
+                if(uri === "/") {
+                    filename = filename + 'index.html';
+                }
+                fs.readFile(filename, 'binary', (err, file) => {
+                    if (err) {
+                        PageNotFound(request, response);    
+                        return;
+                    }
+                    getExtensions(extension, response)
+                    response.write(file, 'binary');
+                    response.end();
+                });                    
+            } else {
+                
             }
-            fs.readFile(filename, 'binary', (err, file) => {
-            if (err) {
-                PageNotFound(request, response);    
-                return;
-            }
-            getExtensions(extension, response)
-            response.write(file, 'binary');
-            response.end();
-        });
     }
     catch (e) {
         PageNotFound(request, response);
