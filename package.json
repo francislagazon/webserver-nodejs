@@ -1,0 +1,23 @@
+{
+  "name": "testpackage",
+  "version": "1.0.1",
+  "description": "Test Package",
+  "main": "newfile.js",
+  "scripts": {
+    "error": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run build:live",
+    "build:live": "nodemon --exec ./node_modules/.bin/ts-node -- ./index.ts"
+  },
+  "keywords": [
+    "Test"
+  ],
+  "author": "Francis",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^7.0.22",
+    "nodemon": "^1.11.0",
+    "ts-node": "^3.0.4",
+    "typescript": "^2.3.3",
+    "webpack": "^2.6.0"
+  }
+}
